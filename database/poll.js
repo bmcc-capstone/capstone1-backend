@@ -29,8 +29,6 @@ const Poll = db.define("poll", {
     type: DataTypes.DATE,
     allowNull: true,
     },
-}, {
-  timestamps: false, 
 });
 
 module.exports = Poll;
