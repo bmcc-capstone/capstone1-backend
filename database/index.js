@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
 const db = require("./db");
 
-const User = require("./User")(db, Sequelize.DataTypes);
+const User = require("./user")(db, Sequelize.DataTypes);
 const Poll = require("./Poll")(db, Sequelize.DataTypes);
 const Option = require("./Option")(db, Sequelize.DataTypes);
 const Vote = require("./Vote")(db, Sequelize.DataTypes);
-const Rank = require("./Rank")(db, Sequelize.DataTypes);  
+const Rank = require("./Rank")(db, Sequelize.DataTypes);
 const Ballet = require("./Ballet")(db, Sequelize.DataTypes);
 const BalletItems = require("./BalletItems")(db, Sequelize.DataTypes);
 
@@ -26,4 +26,3 @@ Rank.belongsTo(Option, { foreignKey: "optionId" });
 
 Ballet.hasMany(BalletItems, { foreignKey: "balletId", onDelete: "CASCADE" });
 BalletItems.belongsTo(Ballet, { foreignKey: "balletId" });
-
