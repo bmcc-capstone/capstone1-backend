@@ -6,6 +6,7 @@ const Ballot = db.define("ballot", {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+    allowNull: false,
   },
   poll_id: {
     type: DataTypes.INTEGER,
