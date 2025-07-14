@@ -14,6 +14,14 @@ const pollOption = db.define("user", {
     allowNull: false,
     validate: { notEmpty: true },
   },
+  poll_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "pollTable",
+      key: "poll_id",
+    },
+  },
 });
 
 module.exports = pollOption;

@@ -33,24 +33,6 @@ const seed = async () => {
         lastName: "Flores",
         passwordHash: User.hashPassword("hashed_password_4"),
       },
-      {
-        username: "admin",
-        passwordHash: User.hashPassword("admin123"),
-        firstName: "Admin",
-        lastName: "User",
-      },
-      {
-        username: "user1",
-        passwordHash: User.hashPassword("user111"),
-        firstName: "User",
-        lastName: "One",
-      },
-      {
-        username: "user2",
-        passwordHash: User.hashPassword("user222"),
-        firstName: "User",
-        lastName: "Two",
-      },
     ]);
 
     const polls = await Poll.bulkCreate([
