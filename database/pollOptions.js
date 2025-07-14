@@ -1,21 +1,19 @@
 const { DataTypes } = require("sequelize");
 const db = require("./db");
+const bcrypt = require("bcrypt");
 
-const Ballot = db.define("ballot", {
-  ballot_id: {
+const pollOption = db.define("user", {
+  option_id: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    allowNull: false,
   },
-  poll_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  user_id: {
+  option_text: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: { notEmpty: true },
   },
 });
 
-module.exports = Ballot;
+module.exports = pollOption;
