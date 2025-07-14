@@ -7,38 +7,34 @@ const seed = async () => {
     await db.sync({ force: true }); // Drop and recreate tables
 
     const users = await User.bulkCreate([
-  { 
-    username: "admin", 
-    passwordHash: User.hashPassword("admin123"),
-    firstName: "Admin",
-    lastName: "User"
-  },
-  { 
-    username: "user1", 
-    passwordHash: User.hashPassword("user111"),
-    firstName: "User",
-    lastName: "One"
-  },
-  { 
-    username: "user2", 
-    passwordHash: User.hashPassword("user222"),
-    firstName: "User",
-    lastName: "Two"
-  },
-]);
-
+      {
+        username: "admin",
+        passwordHash: User.hashPassword("admin123"),
+        firstName: "Admin",
+        lastName: "User",
+      },
+      {
+        username: "user1",
+        passwordHash: User.hashPassword("user111"),
+        firstName: "User",
+        lastName: "One",
+      },
+      {
+        username: "user2",
+        passwordHash: User.hashPassword("user222"),
+        firstName: "User",
+        lastName: "Two",
+      },
+    ]);
 
     const polls = await Poll.bulkCreate([
       {
         title: "Pizza or Burgers",
         description: "Vote for your favorite language this year!",
-
-        
       },
       {
         title: "Favorite food?",
         description: "React, Vue, Svelte, or something else?",
-        
       },
     ]);
 

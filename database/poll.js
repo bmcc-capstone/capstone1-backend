@@ -3,37 +3,31 @@ const db = require("./db");
 const bcrypt = require("bcrypt");
 
 const Poll = db.define("poll", {
-    poll_id:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true ,
-    },
+  poll_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
 
-    title: {
-        type: DataTypes.STRING,
-        allowNull: true,
+  title: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 
-    },
-
-    description: {
+  description: {
     type: DataTypes.TEXT,
     allowNull: true,
-    },
+  },
 
-    created_at: {
+  created_at: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
-    },
+  },
 
-    expires_date: {
+  expires_date: {
     type: DataTypes.DATE,
     allowNull: true,
-    },
+  },
 });
 
 module.exports = Poll;
-
-
-
-
-
