@@ -24,9 +24,10 @@ This project has a vercel.json file, which will make it easier to deploy this pr
 
 ## TEMPLATE - Team Norms: Capstone I
 We’ve discussed how we want to work together. We agree that these things are important to us, but that our opinions may change with experience. This is a living document, subject to change as we learn more about working together as a team.
-Communication & Meetings
-Whats App Groupchat for communicating with one another
-EveryDay After lunch will be meeting planning for the next steps on what to do. 
+
+## Communication & Meetings
+- Whats App Groupchat for communicating with one another
+- EveryDay After lunch will be meeting planning for the next steps on what to do. 
 
 
 ## Code Quality & Standards
@@ -64,5 +65,5 @@ Working Hours:
 
 
 ## Conflict Resolution
-If you are having a roadblock, do not be afraid to say anything. We are all in this together
-Make sure to check in on one another to see how we are doing, even if there is no conflict.
+- If you are having a roadblock, do not be afraid to say anything. We are all in this together
+- Make sure to check in on one another to see how we are doing, even if there is no conflict.
