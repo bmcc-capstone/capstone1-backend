@@ -10,7 +10,6 @@ const Ballot = db.define("ballot", {
   poll_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
   },
   user_id: {
     type: DataTypes.STRING,
