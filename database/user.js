@@ -35,7 +35,7 @@ const User = db.define("user", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  
+
   auth0Id: {
     type: DataTypes.STRING,
     allowNull: true,
