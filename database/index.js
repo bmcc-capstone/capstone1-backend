@@ -7,23 +7,20 @@ const PollOption = require("./pollOptions")(db, Sequelize.DataTypes);
 const Ballot = require("./Ballot")(db, Sequelize.DataTypes);
 const BallotItem = require("./BallotItems")(db, Sequelize.DataTypes);
 
-User.hasMany(Poll, { foreignKey: "userId" });
-Poll.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Poll, { foreignKey: "user_id" });
+Poll.belongsTo(User, { foreignKey: "user_id" });
 
-Poll.hasMany(PollOption, { foreignKey: "pollId", onDelete: "CASCADE" });
-PollOption.belongsTo(Poll, { foreignKey: "pollId" });
+Poll.hasMany(PollOption, { foreignKey: "poll_id", onDelete: "CASCADE" });
+PollOption.belongsTo(Poll, { foreignKey: "poll_id" });
 
-Poll.hasMany(Ballot, { foreignKey: "pollId", onDelete: "CASCADE" });
-Ballot.belongsTo(Poll, { foreignKey: "pollId" });
+Poll.hasMany(Ballot, { foreignKey: "poll_id", onDelete: "CASCADE" });
+Ballot.belongsTo(Poll, { foreignKey: "poll_id" });
 
-User.hasMany(Ballot, { foreignKey: "userId" });
-Ballot.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Ballot, { foreignKey: "user_id" });
+Ballot.belongsTo(User, { foreignKey: "user_id" });
 
-Ballot.hasMany(BallotItem, { foreignKey: "ballotId", onDelete: "CASCADE" });
-BallotItem.belongsTo(Ballot, { foreignKey: "ballotId" });
-
-PollOption.hasMany(Rank, { foreignKey: "optionId" });
-Rank.belongsTo(PollOption, { foreignKey: "optionId" });
+Ballot.hasMany(BallotItem, { foreignKey: "ballot_id", onDelete: "CASCADE" });
+BallotItem.belongsTo(Ballot, { foreignKey: "ballot_id" });
 
 module.exports = {
   db,
