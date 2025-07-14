@@ -2,27 +2,34 @@ const Sequelize = require("sequelize");
 const db = require("./db");
 
 const User = require("./user")(db, Sequelize.DataTypes);
-const pollTable = require("./pollTable")(db, Sequelize.DataTypes);
-const pollOption = require("./pollOptions")(db, Sequelize.DataTypes);
-const Vote = require("./Ballot")(db, Sequelize.DataTypes);
-const Rank = require("./Rank")(db, Sequelize.DataTypes);
-const Ballot = require("./Ballet")(db, Sequelize.DataTypes);
-const BallotItems = require("./BalletItems")(db, Sequelize.DataTypes);
+const Poll = require("./pollTable")(db, Sequelize.DataTypes);
+const PollOption = require("./pollOptions")(db, Sequelize.DataTypes);
+const Ballot = require("./Ballot")(db, Sequelize.DataTypes);
+const BallotItem = require("./BallotItems")(db, Sequelize.DataTypes);
 
 User.hasMany(Poll, { foreignKey: "userId" });
-pollTable.belongsTo(User, { foreignKey: "userId" });
+Poll.belongsTo(User, { foreignKey: "userId" });
 
-pollTable.hasMany(pollOption, { foreignKey: "pollId", onDelete: "CASCADE" });
-pollOption.belongsTo(Poll, { foreignKey: "pollId" });
+Poll.hasMany(PollOption, { foreignKey: "pollId", onDelete: "CASCADE" });
+PollOption.belongsTo(Poll, { foreignKey: "pollId" });
 
-pollTable.hasMany(Vote, { foreignKey: "pollId", onDelete: "CASCADE" });
+Poll.hasMany(Ballot, { foreignKey: "pollId", onDelete: "CASCADE" });
 Ballot.belongsTo(Poll, { foreignKey: "pollId" });
 
-User.hasMany(Vote, { foreignKey: "userId" });
+User.hasMany(Ballot, { foreignKey: "userId" });
 Ballot.belongsTo(User, { foreignKey: "userId" });
 
-Rank.hasMany(pollOption, { foreignKey: "rankId" });
-Rank.belongsTo(pollOption, { foreignKey: "optionId" });
+Ballot.hasMany(BallotItem, { foreignKey: "ballotId", onDelete: "CASCADE" });
+BallotItem.belongsTo(Ballot, { foreignKey: "ballotId" });
 
-Ballot.hasMany(BalletItems, { foreignKey: "ballotId", onDelete: "CASCADE" });
-BallotItems.belongsTo(Ballot, { foreignKey: "ballotId" });
+PollOption.hasMany(Rank, { foreignKey: "optionId" });
+Rank.belongsTo(PollOption, { foreignKey: "optionId" });
+
+module.exports = {
+  db,
+  User,
+  Poll,
+  PollOption,
+  Ballot,
+  BallotItem,
+};
