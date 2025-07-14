@@ -1,5 +1,5 @@
 const db = require("./db");
-const { User } = require("./index");
+const { User, Poll } = require("./index");
 
 const seed = async () => {
   try {
@@ -7,15 +7,65 @@ const seed = async () => {
     await db.sync({ force: true }); // Drop and recreate tables
 
     const users = await User.bulkCreate([
-      { username: "admin", passwordHash: User.hashPassword("admin123") },
-      { username: "user1", passwordHash: User.hashPassword("user111") },
-      { username: "user2", passwordHash: User.hashPassword("user222") },
+      ,
+      {
+        email: "guaro@gmail.com",
+        firstName: "Guarionex",
+        lastName: "Tavares",
+        passwordHash: User.hashPassword("hashed_password_1"),
+      },
+      {
+        email: "jose@gmail.com",
+        firstName: "Jose",
+        lastName: "Ramirez",
+        passwordHash: User.hashPassword("hashed_password_2"),
+      },
+      {
+        email: "benjamin@gmail.com",
+        firstName: "Benjamin",
+        lastName: "Santos",
+        profilePicture: null,
+        passwordHash: User.hashPassword("hashed_password_3"),
+      },
+      {
+        email: "jeramy@gmail.com",
+        firstName: "Jeramy",
+        lastName: "Flores",
+        passwordHash: User.hashPassword("hashed_password_4"),
+      },
+      {
+        username: "admin",
+        passwordHash: User.hashPassword("admin123"),
+        firstName: "Admin",
+        lastName: "User",
+      },
+      {
+        username: "user1",
+        passwordHash: User.hashPassword("user111"),
+        firstName: "User",
+        lastName: "One",
+      },
+      {
+        username: "user2",
+        passwordHash: User.hashPassword("user222"),
+        firstName: "User",
+        lastName: "Two",
+      },
     ]);
 
-    console.log(`👤 Created ${users.length} users`);
+    const polls = await Poll.bulkCreate([
+      {
+        title: "Pizza or Burgers",
+        description: "Vote for your favorite language this year!",
+      },
+      {
+        title: "Favorite food?",
+        description: "React, Vue, Svelte, or something else?",
+      },
+    ]);
 
-    // Create more seed data here once you've created your models
-    // Seed files are a great way to test your database schema!
+    console.log(`🗳️ Created ${users.length} polls`);
+    console.log(`🗳️ Created ${polls.length} polls`);
 
     console.log("🌱 Seeded the database");
   } catch (error) {
