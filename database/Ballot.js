@@ -8,13 +8,21 @@ const Ballot = db.define("ballot", {
     primaryKey: true,
     allowNull: false,
   },
-  poll_id: {
+  pollId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+        model: "polls",
+        key: "pollId",
+    }
   },
-  user_id: {
+  userId: {
     type: DataTypes.STRING,
     allowNull: false,
+    references: {
+        model: "users",
+        key: "userId",
+    },
   },
 });
 
