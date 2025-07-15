@@ -1,10 +1,10 @@
 const db = require("./db");
-const { User, Poll } = require("./index");
+const { User, pollTable } = require("./index");
 
 const seed = async () => {
   try {
     db.logging = false;
-    await db.sync({ force: true }); // Drop and recreate tables
+    await db.sync({ force: true });
 
     const users = await User.bulkCreate([
       ,
