@@ -50,53 +50,53 @@ const seed = async () => {
     const pollOptions = await PollOption.bulkCreate([
       {
         option_text: "pizza",
-        poll_id: polls[1].poll_id, 
+        poll_id: polls[0].poll_id, 
       },
       {
         option_text: "burgers",
-        poll_id: polls[1].poll_id,
+        poll_id: polls[0].poll_id,
       },
       {
         option_text: "lasagna",
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
       },
       {
         option_text: "tres golpes",
-        poll_id: polls[2].poll_id
+        poll_id: polls[1].poll_id
       }
     ]);
 
     const ballots = await Ballot.bulkCreate([
       {
-        poll_id: polls[1].poll_id,
+        poll_id: polls[0].poll_id,
+        user_id: users[0].user_id,
+      },
+      {
+        poll_id: polls[0].poll_id,
         user_id: users[1].user_id,
       },
       {
+        poll_id: polls[1].poll_id, 
+        user_id: users[0].user_id,
+      },
+      {
         poll_id: polls[1].poll_id,
-        user_id: users[2].user_id,
-      },
-      {
-        poll_id: polls[2].poll_id, 
         user_id: users[1].user_id,
-      },
-      {
-        poll_id: polls[2].poll_id,
-        user_id: users[2].user_id,
       }
     ]);
 
     const ballotItems = await BallotItem.bulkCreate ([
       {
-        user_id: users[1].user_id,
-        ballot_id: ballots[1].ballot_id,
-        option_id: pollOptions[1].option_id, 
-        poll_id: polls[1].poll_id,
+        user_id: users[0].user_id,
+        ballot_id: ballots[0].ballot_id,
+        option_id: pollOptions[0].option_id, 
+        poll_id: polls[0].poll_id,
       },
       {
-        user_id: users[2].user_id,
-        ballot_id: ballots[2].user_id,
-        option_id: pollOptions[2].option_id, 
-        poll_id: polls[1].poll_id,
+        user_id: users[1].user_id,
+        ballot_id: ballots[1].user_id,
+        option_id: pollOptions[1].option_id, 
+        poll_id: polls[0].poll_id,
       },
     ]);
 
