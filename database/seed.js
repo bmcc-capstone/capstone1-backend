@@ -1,4 +1,3 @@
-const Ballot = require("./Ballot");
 const db = require("./db");
 const { User, Poll, PollOption, BallotItem  } = require("./index");
 
@@ -45,7 +44,7 @@ const seed = async () => {
         title: "Favorite food?",
         description: "React, Vue, Svelte, or something else?",
       },
-    ]);  
+    ]);
 
     const pollOptions = await PollOption.bulkCreate([
       {
@@ -85,7 +84,7 @@ const seed = async () => {
       }
     ]);
 
-    const ballotItems = await BallotItem.bulkCreate ([
+    const ballotItems = await BallotItem.bulkCreate([
       {
         user_id: users[1].user_id,
         ballot_id: ballots[1].ballot_id,
