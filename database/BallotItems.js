@@ -48,7 +48,7 @@ const BallotItem = db.define("BallotItem", {
 
   rank: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
