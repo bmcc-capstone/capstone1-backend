@@ -1,6 +1,6 @@
 const Ballot = require("./Ballot");
 const db = require("./db");
-const { User, Poll, Ballot, PollOption, BallotItem  } = require("./index");
+const { User, Poll, PollOption, BallotItem  } = require("./index");
 
 const seed = async () => {
   try {
