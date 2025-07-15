@@ -28,6 +28,14 @@ const pollTable = db.define("poll", {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "User",
+      key: "user_id",
+    },
+  },
 });
 
 module.exports = pollTable;
