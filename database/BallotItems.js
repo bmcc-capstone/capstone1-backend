@@ -13,7 +13,7 @@ const BallotItem = db.define("BallotItem", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "User",
+      model: "users",
       key: "user_id",
     },
   },
@@ -22,7 +22,7 @@ const BallotItem = db.define("BallotItem", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Ballot",
+      model: "ballots",
       key: "ballot_id",
     },
   },
@@ -31,7 +31,7 @@ const BallotItem = db.define("BallotItem", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "pollOption",
+      model: "pollOptions",
       key: "option_id",
     },
   },
@@ -40,14 +40,14 @@ const BallotItem = db.define("BallotItem", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "pollTable",
+      model: "polls",
       key: "poll_id",
     },
   },
 
   rank: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

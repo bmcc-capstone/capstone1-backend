@@ -12,18 +12,19 @@ const Ballot = db.define("ballot", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-        model: "pollTable",
-        key: "poll_Id",
+        model: "polls",
+        key: "poll_id",
     }
   },
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "User",
+      model: "users",
       key: "user_id",
     }
   }
 
 });
+
 module.exports = Ballot;

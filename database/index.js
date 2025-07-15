@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("./db");
 
 const User = require("./user");
-const Poll = require("./pollTable");
+const Poll = require("./polls");
 const PollOption = require("./pollOptions");
 const Ballot = require("./Ballot");
 const BallotItem = require("./BallotItems");
