@@ -1,6 +1,5 @@
-const Ballot = require("./Ballot");
 const db = require("./db");
-const { User, Poll, Ballot, PollOption, BallotItem  } = require("./index");
+const { User, Poll, Ballot, PollOption, BallotItem } = require("./index");
 
 const seed = async () => {
   try {
@@ -8,7 +7,6 @@ const seed = async () => {
     await db.sync({ force: true }); // Drop and recreate tables
 
     const users = await User.bulkCreate([
-      ,
       {
         email: "guaro@gmail.com",
         firstName: "Guarionex",
@@ -45,12 +43,12 @@ const seed = async () => {
         title: "Favorite food?",
         description: "React, Vue, Svelte, or something else?",
       },
-    ]);  
+    ]);
 
     const pollOptions = await PollOption.bulkCreate([
       {
         option_text: "pizza",
-        poll_id: 1, 
+        poll_id: 1,
       },
       {
         option_text: "burgers",
@@ -62,8 +60,8 @@ const seed = async () => {
       },
       {
         option_text: "tres golpes",
-        poll_id: 2
-      }
+        poll_id: 2,
+      },
     ]);
 
     const ballots = await Ballot.bulkCreate([
@@ -76,26 +74,26 @@ const seed = async () => {
         user_id: 2,
       },
       {
-        poll_id: 2, 
+        poll_id: 2,
         user_id: 1,
       },
       {
         poll_id: 2,
         user_id: 2,
-      }
+      },
     ]);
 
-    const ballotItems = await BallotItem.bulkCreate ([
+    const ballotItems = await BallotItem.bulkCreate([
       {
         user_id: 1,
         ballot_id: 1,
-        option_id: 1, 
-        poll_id: 1, 
+        option_id: 1,
+        poll_id: 1,
       },
       {
         user_id: 2,
         ballot_id: 2,
-        option_id: 2, 
+        option_id: 2,
         poll_id: 1,
       },
     ]);
