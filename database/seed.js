@@ -8,7 +8,7 @@ const seed = async () => {
     await db.sync({ force: true }); // Drop and recreate tables
 
     const users = await User.bulkCreate([
-      ,
+
       {
         email: "guaro@gmail.com",
         firstName: "Guarionex",
