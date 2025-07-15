@@ -91,14 +91,12 @@ const seed = async () => {
         ballot_id: 1,
         option_id: 1, 
         poll_id: 1, 
-        rank: 0
       },
       {
         user_id: 2,
         ballot_id: 2,
         option_id: 2, 
         poll_id: 1,
-        rank: 0
       },
     ]);
 
