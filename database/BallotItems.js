@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       },
   
       rank: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     });
