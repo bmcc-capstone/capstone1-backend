@@ -22,6 +22,7 @@ Ballot.belongsTo(User, { foreignKey: "user_id" });
 Ballot.hasMany(BallotItem, { foreignKey: "ballot_id", onDelete: "CASCADE" });
 BallotItem.belongsTo(Ballot, { foreignKey: "ballot_id" });
 
+
 module.exports = {
   db,
   User,
