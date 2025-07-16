@@ -59,34 +59,38 @@ const seed = async () => {
       },
       {
         option_text: "burgers",
-        poll_id: polls[1].poll_id,
+        poll_id: polls[0].poll_id,
       },
       {
         option_text: "lasagna",
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
       },
       {
         option_text: "tres golpes",
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
       },
     ]);
 
     const ballots = await Ballot.bulkCreate([
       {
+        poll_id: polls[0].poll_id,
+        user_id: users[0].user_id,
+      },
+      {
+        poll_id: polls[0].poll_id,
+        user_id: users[1].user_id,
+      },
+      {
+        poll_id: polls[1].poll_id, 
+        user_id: users[0].user_id,
+      },
+      {
         poll_id: polls[1].poll_id,
         user_id: users[1].user_id,
       },
       {
         poll_id: polls[1].poll_id,
-        user_id: users[2].user_id,
-      },
-      {
-        poll_id: polls[2].poll_id,
         user_id: users[1].user_id,
-      },
-      {
-        poll_id: polls[2].poll_id,
-        user_id: users[2].user_id,
       },
     ]);
 
@@ -100,12 +104,12 @@ const seed = async () => {
       {
         user_id: users[2].user_id,
         ballot_id: ballots[2].user_id,
-        option_id: pollOptions[2].option_id,
+        option_id: pollOptions[1].option_id,
         poll_id: polls[1].poll_id,
       },
     ]);
 
-    console.log(`🗳️ Created ${users.length} polls`);
+    console.log(`🗳️ Created ${users.length} users`);
     console.log(`🗳️ Created ${polls.length} polls`);
 
     console.log("🌱 Seeded the database");
