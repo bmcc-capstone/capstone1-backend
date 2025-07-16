@@ -53,12 +53,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Delete a poll 
-router.delete("/", async (req, res) => {
-  try {
-
-  } catch (eror) {
-    
-  }
-})
 module.exports = router;
