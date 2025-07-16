@@ -1,5 +1,5 @@
 const db = require("./db");
-const { User, Poll, PollOption, BallotItem, Ballot } = require("./index");
+const { User, Poll, PollOption, Ballot, BallotItem } = require("./index");
 
 const seed = async () => {
   try {
@@ -44,6 +44,11 @@ const seed = async () => {
         title: "Favorite food?",
         description: "React, Vue, Svelte, or something else?",
         user_id: users[1].user_id,
+      },
+      {
+        title: "Favorite movie genre?",
+        description: "Action, Thriller, Romance, or something else?",
+        user_id: users[2].user_id,
       },
     ]);
 
