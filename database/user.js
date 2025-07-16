@@ -9,6 +9,7 @@ const User = db.define("user", {
     autoIncrement: true,
     primaryKey: true,
   },
+
   username: {
     type: DataTypes.STRING,
     allowNull: false,
