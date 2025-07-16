@@ -1,32 +1,42 @@
 const express = require('express');
 const router = express.Router();
-const PollOption = require('../database/pollOptions');
+const { PollOption } = require('../database');
+const { Poll }  = require('../database');
 
-router.delete("/pollOptions/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
+router.delete("/polls/:pollId/options/:id", async (req, res) => {
+    try {
+        const polls = Poll.findAll();
+        const pollOptions = PollOption.findAll();
 
-    const pollOptions = await PollOption.findbyPk({
-        where: {
-            poll_id : req.params.id,
-        },
-    });
+        const poll = await Poll.findByPk(pollId);
 
-   
-    
-    const deletedOption = await pollOptions.destroy ({
-        where: { poll_id : id }
-    });
+        if (!poll) {
+            return res.status(404).json({error: "PollOption not found"});
+        }
 
-    res.json({
-      message: "You successfully connected, checking deletion...",
-    });
+        const pollOption = await PollOption.findOne({
+            where: {
+                option_id: optionId,
+                poll_id: pollId,
+            },
+        });
+
+        if (!pollOption) {
+            return res.status(404).json({ error: `Option ${optionId} not found in poll ${pollId}`});
+        }
+
+        await pollOption.destroy();
+
+        res.json({
+            message: `PollOption with id ${id} was successfully deleted`,
+        });
 
   } catch (error) {
-    res.status(500).json({
-      error: "Error deleting item",
-      message:
-        "Could not delete item",
+        console.error("Error deleting poll option:", error);
+
+        res.status(500).json({
+        error: "Internal server error",
+        message: "Could not delete poll option",
     });
   }
 });
