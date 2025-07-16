@@ -1,5 +1,5 @@
 const db = require("./db");
-const { User, Poll, PollOption, BallotItem } = require("./index");
+const { User, Poll, PollOption, BallotItem, Ballot } = require("./index");
 
 const seed = async () => {
   try {
@@ -9,6 +9,7 @@ const seed = async () => {
     const users = await User.bulkCreate([
       {
         email: "guaro@gmail.com",
+        username: "guarionex.t",
         firstName: "Guarionex",
         lastName: "Tavares",
         passwordHash: User.hashPassword("hashed_password_1"),
@@ -17,12 +18,14 @@ const seed = async () => {
         email: "jose@gmail.com",
         firstName: "Jose",
         lastName: "Ramirez",
+        username: "jose.ramirez",
         passwordHash: User.hashPassword("hashed_password_2"),
       },
       {
         email: "benjamin@gmail.com",
         firstName: "Benjamin",
         lastName: "Santos",
+        username: "ben.santos",
         profilePicture: null,
         passwordHash: User.hashPassword("hashed_password_3"),
       },
@@ -30,6 +33,7 @@ const seed = async () => {
         email: "jeramy@gmail.com",
         firstName: "Jeramy",
         lastName: "Flores",
+        username: "jeramy.f",
         passwordHash: User.hashPassword("hashed_password_4"),
       },
     ]);
@@ -50,19 +54,19 @@ const seed = async () => {
     const pollOptions = await PollOption.bulkCreate([
       {
         option_text: "pizza",
-        poll_id: polls[1].poll_id,
+        poll_id: polls[0].poll_id,
       },
       {
         option_text: "burgers",
-        poll_id: polls[1].poll_id,
+        poll_id: polls[0].poll_id,
       },
       {
         option_text: "lasagna",
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
       },
       {
         option_text: "tres golpes",
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
       },
     ]);
 
@@ -76,11 +80,11 @@ const seed = async () => {
         user_id: users[2].user_id,
       },
       {
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
         user_id: users[1].user_id,
       },
       {
-        poll_id: polls[2].poll_id,
+        poll_id: polls[1].poll_id,
         user_id: users[2].user_id,
       },
     ]);
