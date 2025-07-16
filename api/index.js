@@ -7,7 +7,7 @@ const pollOptionRouter = require("./pollOptions");
 const ballotRouter = require("./Ballot");
 
 router.use("/ballots", ballotRouter);
-router.use("/poll-options", pollOptionRouter); // 
+router.use("/poll-options", pollOptionRouter); //
 router.use("/test-db", testDbRouter);
 router.use("/polls", pollRouter); //
 

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 const bcrypt = require("bcrypt");
 
-const pollOption = db.define("pollOption", {
+const PollOption = db.define("pollOption", {
   option_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -24,4 +24,4 @@ const pollOption = db.define("pollOption", {
   },
 });
 
-module.exports = pollOption;
+module.exports = PollOption;
