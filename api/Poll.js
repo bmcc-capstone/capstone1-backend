@@ -46,12 +46,11 @@ router.post("/", async (req, res) => {
       expires_date: req.body.expires_date,
     });
 
-    res.status(201).json(poll); 
+    res.status(201).json(poll);
   } catch (error) {
     console.error("Error creating poll:", error);
     res.status(500).json({ error: "Failed to create poll" });
   }
 });
-
 
 module.exports = router;
