@@ -20,32 +20,32 @@ router.post("/", async (req, res) => {
 });
 
 // //Delete Poll options
-// router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
-//   const { pollId, optionId } = req.params;
-//   try {
-//     const option = await PollOption.findOne({
-//       where: {
-//         poll_id: pollId,
-//         option_id: optionId,
-//       },
-//     });
+router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
+  const { pollId, optionId } = req.params;
+  try {
+    const option = await PollOption.findOne({
+      where: {
+        poll_id: pollId,
+        option_id: optionId,
+      },
+    });
 
-//     if (!option) {
-//       return res.status(404).json({ error: "Option not found for this poll" });
-//     }
+    if (!option) {
+      return res.status(404).json({ error: "Option not found for this poll" });
+    }
 
-//     //Deletes the related ballots first
-//     await BallotItem.destroy({
-//       where: { option_id: optionId },
-//     });
+    //Deletes the related ballots first
+    await BallotItem.destroy({
+      where: { option_id: optionId },
+    });
 
-//     //Then deletes the option
-//     await option.destroy();
+    //Then deletes the option
+    await option.destroy();
 
-//     res.status(204).send(); // No Content
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+    res.status(204).send(); // No Content
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;
