@@ -24,7 +24,6 @@ const Ballot = db.define("ballot", {
       key: "user_id",
     }
   }
-
 });
 
 module.exports = Ballot;
