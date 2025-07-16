@@ -54,3 +54,23 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+
+
+//Delete Polls 
+router.delete("/:id", async (req, res) => {
+  try {
+    const poll = await Poll.findByPk(req.params.id);
+
+    if (!poll) {
+      return res.status(404).json({ error: "Poll not found" });
+    }
+
+    await poll.destroy();
+
+    res.status(204).send(); 
+  } catch (error) {
+    console.error("Error deleting poll:", error);
+    res.status(500).json({ error: "Failed to delete poll" });
+  }
+});
+
