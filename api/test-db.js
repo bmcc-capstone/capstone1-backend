@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../database");
 
-// You don't actually need this route, it's just a good way to confirm that your database connection is working.
-// Feel free to delete this entire file.
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll();
@@ -11,6 +9,7 @@ router.get("/", async (req, res) => {
     res.json({
       message: "You successfully connected to the database 🥳",
       usersCount: users.length,
+      allUsers: users
     });
   } catch (error) {
     console.error("Error fetching users:", error);
