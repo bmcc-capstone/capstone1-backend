@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { PollOption } = require("../database");
+const { PollOption, BallotItem } = require("../database");
 
 // Create a new poll option
 router.post("/", async (req, res) => {
@@ -19,28 +19,33 @@ router.post("/", async (req, res) => {
   }
 });
 
-//Delete Poll options
-router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
-  const { pollId, optionId } = req.params;
-  console.log(pollId);
-  console.log(optionId);
-  try {
-    const option = await PollOption.findOne({
-      where: {
-        poll_id: pollId,
-        option_id: optionId,
-      },
-    });
+// //Delete Poll options
+// router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
+//   const { pollId, optionId } = req.params;
+//   try {
+//     const option = await PollOption.findOne({
+//       where: {
+//         poll_id: pollId,
+//         option_id: optionId,
+//       },
+//     });
 
-    if (!option) {
-      return res.status(404).json({ error: "Option not found for this poll" });
-    }
+//     if (!option) {
+//       return res.status(404).json({ error: "Option not found for this poll" });
+//     }
 
-    await option.destroy();
-    res.status(204).send(); // No Content
-  } catch (err) {
-    console.log(err);
-  }
-});
+//     //Deletes the related ballots first
+//     await BallotItem.destroy({
+//       where: { option_id: optionId },
+//     });
+
+//     //Then deletes the option
+//     await option.destroy();
+
+//     res.status(204).send(); // No Content
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 module.exports = router;
