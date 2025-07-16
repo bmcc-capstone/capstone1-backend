@@ -100,7 +100,7 @@ const seed = async () => {
       },
     ]);
 
-    console.log(`🗳️ Created ${users.length} polls`);
+    console.log(`🗳️ Created ${users.length} users`);
     console.log(`🗳️ Created ${polls.length} polls`);
 
     console.log("🌱 Seeded the database");

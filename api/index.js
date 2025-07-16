@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const testDbRouter = require("./test-db");
-const deletePollOptionRouter = require ('./deletePollOption')
+const deletePollOptionRoutes = require ('./deletePollOption')
 
 router.use("/test-db", testDbRouter);
-router.use("/deletePollOption", deletePollOptionRouter);
+router.use("/deletePollOption", deletePollOptionRoutes);
 
 module.exports = router;
