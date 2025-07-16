@@ -13,6 +13,12 @@ Poll.belongsTo(User, { foreignKey: "user_id" });
 Poll.hasMany(PollOption, { foreignKey: "poll_id", onDelete: "CASCADE" });
 PollOption.belongsTo(Poll, { foreignKey: "poll_id" });
 
+PollOption.hasMany(BallotItem, {
+  foreignKey: "option_id",
+  onDelete: "CASCADE",
+});
+BallotItem.belongsTo(PollOption, { foreignKey: "option_id" });
+
 Poll.hasMany(Ballot, { foreignKey: "poll_id", onDelete: "CASCADE" });
 Ballot.belongsTo(Poll, { foreignKey: "poll_id" });
 
