@@ -20,7 +20,7 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 //get specific poll by id
-router.get("/:id", async (req, res) => {
+router.get("/poll//:id", async (req, res) => {
   try {
     const poll = await Poll.findByPk(req.params.id);
 
@@ -53,10 +53,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
-
-
-//Delete Polls 
+//Delete Polls
 router.delete("/:id", async (req, res) => {
   try {
     const poll = await Poll.findByPk(req.params.id);
@@ -67,10 +64,11 @@ router.delete("/:id", async (req, res) => {
 
     await poll.destroy();
 
-    res.status(204).send(); 
+    res.status(204).send();
   } catch (error) {
     console.error("Error deleting poll:", error);
     res.status(500).json({ error: "Failed to delete poll" });
   }
 });
 
+module.exports = router;

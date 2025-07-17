@@ -48,4 +48,19 @@ router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
   }
 });
 
+router.get("/:poll_id", async (req, res) => {
+  const { poll_id } = req.params;
+
+  try {
+    const options = await PollOption.findAll({
+      where: { poll_id },
+    });
+
+    res.json(options);
+  } catch (error) {
+    console.error("Error fetching poll options:", error);
+    res.status(500).json({ error: "Failed to fetch poll options" });
+  }
+});
+
 module.exports = router;
