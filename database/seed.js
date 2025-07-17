@@ -1,9 +1,5 @@
 const db = require("./db");
-<<<<<<< HEAD
-const { User, Poll, PollOption, BallotItem, Ballot } = require("./index");
-=======
 const { User, Poll, PollOption, Ballot, BallotItem } = require("./index");
->>>>>>> 5f622561a97460f0e54e72750bee24d31ab84c95
 
 const seed = async () => {
   try {
@@ -89,7 +85,7 @@ const seed = async () => {
         user_id: users[1].user_id,
       },
       {
-        poll_id: polls[1].poll_id, 
+        poll_id: polls[1].poll_id,
         user_id: users[0].user_id,
       },
       {
@@ -98,21 +94,8 @@ const seed = async () => {
       },
       {
         poll_id: polls[1].poll_id,
-<<<<<<< HEAD
-        user_id: users[2].user_id,
-      },
-      {
-        poll_id: polls[1].poll_id,
         user_id: users[1].user_id,
       },
-      {
-        poll_id: polls[1].poll_id,
-        user_id: users[2].user_id,
-      },
-=======
-        user_id: users[1].user_id,
-      },
->>>>>>> 5f622561a97460f0e54e72750bee24d31ab84c95
     ]);
 
     const ballotItems = await BallotItem.bulkCreate([
