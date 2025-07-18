@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 const bcrypt = require("bcrypt");
 
-const poll = db.define("polls", {
+const Poll = db.define("polls", {
   poll_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -38,4 +38,4 @@ const poll = db.define("polls", {
   },
 });
 
-module.exports = poll;
+module.exports = Poll;

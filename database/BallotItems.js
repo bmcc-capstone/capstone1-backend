@@ -2,10 +2,15 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 
 const BallotItem = db.define("BallotItem", {
-  rank_id: {
+  ballotItem_id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+
+  rank: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 
@@ -43,11 +48,6 @@ const BallotItem = db.define("BallotItem", {
       model: "polls",
       key: "poll_id",
     },
-  },
-
-  rank: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
   },
 });
 

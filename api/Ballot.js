@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Ballot } = require("../database");
-const { Poll } = require("../database")
+const { Ballot, BallotItem } = require("../database");
+const { Poll } = require("../database");
 
 // Get Ballot by ID
 // GET a specific ballot by ballot_id
@@ -21,17 +21,17 @@ router.get("/:id", async (req, res) => {
 });
 
 //Get ALL ballots by specific poll ID
-router.get("/poll/:poll_id", async (req, res) => {
+router.get("/ballots/poll/:poll_id", async (req, res) => {
   try {
-    const ballots = await Ballot.findAll ({
+    const ballots = await Ballot.findAll({
       where: {
         poll_id: req.params.poll_id,
-      }
+      },
     });
     res.json(ballots);
   } catch (error) {
     console.error("Error fetching ballots for poll:", error);
-    res.status(500).json({ error: "Failed to fetch poll ballots"});
+    res.status(500).json({ error: "Failed to fetch poll ballots" });
   }
 });
 
