@@ -48,12 +48,13 @@ router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
   }
 });
 
-router.get("/:poll_id", async (req, res) => {
-  const { poll_id } = req.params;
+//Get All Poll Options
+router.get("/poll/:poll_id", async (req, res) => {
+  const { poll_id } = req.params; //turn the id from request into a variable
 
   try {
     const options = await PollOption.findAll({
-      where: { poll_id },
+      where: { poll_id }, //Find all poll Options that have that specific poll_id
     });
 
     res.json(options);
