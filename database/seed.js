@@ -100,7 +100,7 @@ const seed = async () => {
       },
       {
         poll_id: polls[1].poll_id,
-        user_id: users[1].user_id,
+        user_id: users[2].user_id,
       },
       {
         poll_id: polls[1].poll_id,
@@ -114,12 +114,14 @@ const seed = async () => {
         ballot_id: ballots[1].ballot_id,
         option_id: pollOptions[1].option_id,
         poll_id: polls[1].poll_id,
+        rank: 1,
       },
       {
         user_id: users[2].user_id,
         ballot_id: ballots[2].user_id,
         option_id: pollOptions[1].option_id,
         poll_id: polls[1].poll_id,
+        rank: 2,
       },
     ]);
 
@@ -138,4 +140,4 @@ const seed = async () => {
 
 seed();
 
-module.ecport = seed();
+module.exports = seed;
