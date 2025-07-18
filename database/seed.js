@@ -1,9 +1,5 @@
 const db = require("./db");
-<<<<<<< HEAD
-const { User, Poll, PollOption, BallotItem, Ballot } = require("./index");
-=======
 const { User, Poll, PollOption, Ballot, BallotItem } = require("./index");
->>>>>>> 5f622561a97460f0e54e72750bee24d31ab84c95
 
 const seed = async () => {
   try {
@@ -51,12 +47,22 @@ const seed = async () => {
       {
         title: "Favorite food?",
         description: "React, Vue, Svelte, or something else?",
-        user_id: users[1].user_id,
+        user_id: users[0].user_id,
       },
       {
         title: "Favorite movie genre?",
         description: "Action, Thriller, Romance, or something else?",
         user_id: users[2].user_id,
+      },
+      {
+        title: "Greatest basketball player?",
+        description: "Lebron or Jordan?",
+        user_id: users[3].user_id,
+      },
+      {
+        title: "Favorite pop star",
+        description: "Michael Jackson or Prince?",
+        user_id: users[3].user_id,
       },
     ]);
 
@@ -98,21 +104,8 @@ const seed = async () => {
       },
       {
         poll_id: polls[1].poll_id,
-<<<<<<< HEAD
-        user_id: users[2].user_id,
-      },
-      {
-        poll_id: polls[1].poll_id,
         user_id: users[1].user_id,
       },
-      {
-        poll_id: polls[1].poll_id,
-        user_id: users[2].user_id,
-      },
-=======
-        user_id: users[1].user_id,
-      },
->>>>>>> 5f622561a97460f0e54e72750bee24d31ab84c95
     ]);
 
     const ballotItems = await BallotItem.bulkCreate([
