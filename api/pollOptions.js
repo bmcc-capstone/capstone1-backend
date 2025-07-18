@@ -48,6 +48,7 @@ router.delete("/polls/:pollId/options/:optionId", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 //Get All Poll Options
 router.get("/poll/:poll_id", async (req, res) => {
   const { poll_id } = req.params; //turn the id from request into a variable
@@ -60,6 +61,22 @@ router.get("/poll/:poll_id", async (req, res) => {
     res.json(options);
   } catch (error) {
     console.error("Error fetching poll options:", error);
+=======
+// get poll options 
+router.get("/options/:poll_id/", async (req, res) => {
+  try {
+    const pollOptions = await PollOption.findAll({
+      where: {
+        poll_id: req.params.poll_id,
+      },
+    });
+
+    res.json(pollOptions);
+
+  } catch (error) {
+    console.error("Error fetching poll options for poll:", error);
+
+>>>>>>> 56fcc792e1df5298f4f62568af757d0af6c15bc6
     res.status(500).json({ error: "Failed to fetch poll options" });
   }
 });
