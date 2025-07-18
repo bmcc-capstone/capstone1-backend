@@ -40,12 +40,12 @@ const seed = async () => {
 
     const polls = await Poll.bulkCreate([
       {
-        title: "Pizza or Burgers",
+        title: "Pizza or Burgers 🍕 ",
         description: "Vote for your favorite language this year!",
         user_id: users[0].user_id,
       },
       {
-        title: "Favorite food?",
+        title: "Favorite food? 🍕 ",
         description: "React, Vue, Svelte, or something else?",
         user_id: users[0].user_id,
       },
@@ -55,12 +55,12 @@ const seed = async () => {
         user_id: users[2].user_id,
       },
       {
-        title: "Greatest basketball player?",
+        title: "Greatest basketball player? 🏀",
         description: "Lebron or Jordan?",
         user_id: users[3].user_id,
       },
       {
-        title: "Favorite pop star",
+        title: "Favorite pop star 🌟🎤",
         description: "Michael Jackson or Prince?",
         user_id: users[3].user_id,
       },
