@@ -1,29 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const { Poll } = require("../database");
+const { User } = require("../database");
 
-function isAuthenticated(req, res,next) {
-    if (req.session && req.session.user) {
-        return next();
-    }
-    return res.status(401).json({ message: 'Not authenticated' })
-}
-
-// current logged in user_id
-router.get("/me", async (req, res) => {
+// get specific id from username
+router.get("/:username", async (req, res) => {
   try {
-    const polls = await Poll.findAll({
-      where: {
-        user_id: req.params.userId,
-      },
+    const username = await User.findOne({
+        where: {
+            username : req.params.username,
+        }
+    })
+    console.log(`Found users ${req.params.user_id}`);
+    res.json({
+      user_id: username.user_id,
     });
-    res.json(polls);
+
   } catch (error) {
-    console.error("Error fetching polls for user:", error);
-    res.status(500).json({ error: "Failed to fetch user polls" });
+    console.error("Error fetching user id:", error);
+    res.status(500).json({
+      error: "Failed to fetch user id",
+      message:
+        "Check your database connection, and consider running your seed file: npm run seed",
+    });
   }
 });
 
 module.exports = router;
-
-
