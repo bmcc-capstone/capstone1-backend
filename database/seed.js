@@ -127,3 +127,5 @@ const seed = async () => {
 };
 
 seed();
+
+module.ecport = seed();
