@@ -20,7 +20,7 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 //get specific poll by id
-router.get("/poll//:id", async (req, res) => {
+router.get("/poll/:id", async (req, res) => {
   try {
     const poll = await Poll.findByPk(req.params.id);
 
