@@ -28,6 +28,7 @@ const Poll = db.define("polls", {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -36,6 +37,12 @@ const Poll = db.define("polls", {
       key: "user_id",
     },
   },
+
+  slug: {
+    type: DataTypes.UUID, 
+    defaultValue: DataTypes.UUIDV4,
+    unique: true,
+  }
 });
 
 module.exports = Poll;

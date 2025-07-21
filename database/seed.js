@@ -47,12 +47,14 @@ const seed = async () => {
       {
         title: "Favorite food? 🍕 ",
         description: "React, Vue, Svelte, or something else?",
-        user_id: users[0].user_id,
+        user_id: users[3].user_id,
+        
       },
       {
         title: "Favorite movie genre?",
         description: "Action, Thriller, Romance, or something else?",
-        user_id: users[2].user_id,
+        user_id: users[3].user_id,
+        
       },
       {
         title: "Greatest basketball player? 🏀",
