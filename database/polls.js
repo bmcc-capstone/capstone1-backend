@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const db = require("./db");
 const bcrypt = require("bcrypt");
+const slugify = require('slugify');
 
 const Poll = db.define("polls", {
   poll_id: {
@@ -50,10 +51,28 @@ const Poll = db.define("polls", {
   },
 
   slug: {
-    type: DataTypes.UUID, 
-    defaultValue: DataTypes.UUIDV4,
+    type: DataTypes.STRING, 
     unique: true,
   },
+
+  shareableLink: {
+    type: DataTypes.STRING,
+    unique: true,
+  }
 });
+
+Poll.beforeCreate(async (poll) => {
+  if (poll.title) {
+    const rawSlug = slugify(poll.title, {
+      lower: true, 
+      strict: true,
+    });
+
+  poll.slug = `${rawSlug}-${Date.now()}`;
+  poll.shareableLink = `http://localhost:3000/poll/${poll.slug}`;
+  }
+})
+
+
 
 module.exports = Poll;

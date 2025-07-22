@@ -36,8 +36,6 @@ router.get("/poll/:id", async (req, res) => {
 });
 
 //POST
-
-
 router.post("/:userId", async (req, res) => {
   try {
     const poll = await Poll.create({
@@ -51,10 +49,8 @@ router.post("/:userId", async (req, res) => {
     });
     console.log(poll);
 
-    res.status(201).json({
-      poll,
-      shareableLink: `${req.protocol}://${req.get('host')}/poll/${poll.slug}`,
-    });
+    res.status(201).json({ poll });
+    
   } catch (error) {
     console.error("Error creating poll:", error);
     res.status(500).json({ error: "Failed to create poll" });
