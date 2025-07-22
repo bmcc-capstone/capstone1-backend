@@ -83,6 +83,14 @@ const seed = async () => {
         option_text: "tres golpes",
         poll_id: polls[1].poll_id,
       },
+      {
+        option_text: "Action",
+        poll_id: polls[2].poll_id,
+      },
+      {
+        option_text: "Romance",
+        poll_id: polls[2].poll_id,
+      },
     ]);
 
     const ballots = await Ballot.bulkCreate([
@@ -106,6 +114,14 @@ const seed = async () => {
         poll_id: polls[1].poll_id,
         user_id: users[1].user_id,
       },
+      {
+        poll_id: polls[2].poll_id,
+        user_id: users[0].user_id,
+      },
+      {
+        poll_id: polls[2].poll_id,
+        user_id: users[1].user_id,
+      },
     ]);
 
     const ballotItems = await BallotItem.bulkCreate([
@@ -122,6 +138,20 @@ const seed = async () => {
         option_id: pollOptions[1].option_id,
         poll_id: polls[1].poll_id,
         rank: 2,
+      },
+      {
+        user_id: users[0].user_id,
+        ballot_id: ballots[5].ballot_id, 
+        option_id: pollOptions[4].option_id, // "Action"
+        poll_id: polls[2].poll_id,
+        rank: 1,
+      },
+      {
+        user_id: users[1].user_id,
+        ballot_id: ballots[6].ballot_id, // 
+        option_id: pollOptions[5].option_id, // "Romance"
+        poll_id: polls[2].poll_id,
+        rank: 1,
       },
     ]);
 
