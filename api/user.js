@@ -12,6 +12,7 @@ router.get("/:username", async (req, res) => {
     });
     console.log(`Looking up user: ${req.params.username}`);
     console.log(user.user_id);
+
     res.json({
       user_id: user.user_id,
     });

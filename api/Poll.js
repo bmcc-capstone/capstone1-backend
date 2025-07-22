@@ -37,15 +37,17 @@ router.get("/poll/:id", async (req, res) => {
 
 //POST
 
-//Create Polls
-router.post("/:user_id", async (req, res) => {
+
+router.post("/:userId", async (req, res) => {
   try {
     const poll = await Poll.create({
       title: req.body.title,
       description: req.body.description,
       expires_date: req.body.expires_date,
       status: req.body.status,
-      user_id: req.params.user_id,
+      user_id: req.params.userId,
+      public : req.body.public || false,
+
     });
     console.log(poll);
 
