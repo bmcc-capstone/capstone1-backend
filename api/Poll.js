@@ -50,7 +50,7 @@ router.post("/:userId", async (req, res) => {
     console.log(poll);
 
     res.status(201).json({ poll });
-    
+
   } catch (error) {
     console.error("Error creating poll:", error);
     res.status(500).json({ error: "Failed to create poll" });
@@ -75,17 +75,18 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// fetch polls using unique urls for each
-// router.get('/:slug', async (req, res) => {
-//   try {
-//     const poll = await Poll.findOne({ where: { slug: req.params.slug } })
-//     if (!poll) { return res.status(404).json({ error: "Poll not found" })};
+// fetch polls using shareable urls for each
+router.get('/:slug', async (req, res) => {
+  try {
+    const poll = await Poll.findOne({ where: { slug: req.params.slug } })
+    if (!poll) { return res.status(404).json({ error: "Poll not found" })};
 
-//     res.json(poll);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Failed to fetch poll"});
-//   }
-// });
+    res.json(poll);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch poll"});
+  }
+});
 
 module.exports = router;
