@@ -44,6 +44,20 @@ router.patch("/update-rankings", async (req, res) => {
     return res.status(400).json({ error: "poll_id is required" });
   }
 
+  // --- Poll expiration check ---
+  try {
+    const poll = await Poll.findByPk(pollId);
+    if (!poll) {
+      return res.status(404).json({ error: "Poll not found." });
+    }
+    if (poll.expires_date && new Date() > poll.expires_date) {
+      return res.status(403).json({ error: "Poll is closed for voting." });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to check poll expiration." });
+  }
+  // --- End poll expiration check ---
+
   try {
     const ballotItemIds = updates.map((u) => u.ballotItem_id);
 
