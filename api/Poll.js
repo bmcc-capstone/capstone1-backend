@@ -20,7 +20,7 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 //get specific poll by id
-router.get("/poll//:id", async (req, res) => {
+router.get("/poll/:id", async (req, res) => {
   try {
     const poll = await Poll.findByPk(req.params.id);
 
@@ -37,16 +37,19 @@ router.get("/poll//:id", async (req, res) => {
 
 //POST
 
-//Create Polls
+
 router.post("/:userId", async (req, res) => {
   try {
     const poll = await Poll.create({
       title: req.body.title,
       description: req.body.description,
       expires_date: req.body.expires_date,
+      status: req.body.status,
       user_id: req.params.userId,
       public : req.body.public || false,
+
     });
+    console.log(poll);
 
     res.status(201).json({
       poll,
