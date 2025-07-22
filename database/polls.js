@@ -28,6 +28,11 @@ const Poll = db.define("polls", {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  public: {
+    type: DataTypes.BOOLEAN,
+    allowNull: null,
+    defaultValue: true,
+  },
 
   user_id: {
     type: DataTypes.INTEGER,
