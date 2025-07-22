@@ -38,11 +38,11 @@ const Poll = db.define("polls", {
     },
   },
 
-  slug: {
-    type: DataTypes.UUID, 
-    defaultValue: DataTypes.UUIDV4,
-    unique: true,
-  }
+  // slug: {
+  //   type: DataTypes.UUID, 
+  //   defaultValue: DataTypes.UUIDV4,
+  //   unique: true,
+  // }
 });
 
 module.exports = Poll;
