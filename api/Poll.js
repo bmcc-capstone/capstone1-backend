@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 const { Poll } = require("../database");
 
 //GET ROUTES
@@ -36,8 +37,6 @@ router.get("/poll/:id", async (req, res) => {
 });
 
 //POST
-
-
 router.post("/:userId", async (req, res) => {
   try {
     const poll = await Poll.create({
@@ -46,8 +45,7 @@ router.post("/:userId", async (req, res) => {
       expires_date: req.body.expires_date,
       status: req.body.status,
       user_id: req.params.userId,
-      public : req.body.public || false,
-
+      public: req.body.public || false,
     });
     console.log(poll);
 
@@ -55,6 +53,36 @@ router.post("/:userId", async (req, res) => {
   } catch (error) {
     console.error("Error creating poll:", error);
     res.status(500).json({ error: "Failed to create poll" });
+  }
+});
+
+// Simulated viewer count for LivePolls
+router.get("/:poll_id/users", (req, res) => {
+  try {
+    const simulatedUserCount = Math.floor(Math.random() * 10) + 1;
+    res.json({ userCount: simulatedUserCount });
+  } catch (error) {
+    console.error("Error fetching user count:", error);
+    res.status(500).json({ error: "Failed to fetch user count" });
+  }
+});
+
+//Get all LivePolls !
+router.get("/livepolls", async (req, res) => {
+  try {
+    const polls = await Poll.findAll({
+      where: {
+        expires_date: {
+          [Op.gt]: new Date(), // Polls with future expiration date (still live)
+        },
+        public: true, // Optional: only public polls; remove if you want all
+      },
+    });
+
+    res.json(polls);
+  } catch (error) {
+    console.error("Error fetching live polls:", error);
+    res.status(500).json({ error: "Failed to fetch live polls" });
   }
 });
 
