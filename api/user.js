@@ -10,7 +10,7 @@ router.get("/:username", async (req, res) => {
             username : req.params.username,
         }
     })
-    console.log(`Found users ${req.params.user_id}`);
+    console.log(`Found users ${req.params.username}`);
     res.json({
       user_id: username.user_id,
     });
