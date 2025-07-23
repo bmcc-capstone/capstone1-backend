@@ -154,4 +154,26 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// GET - Get poll by slug
+router.get("/:slug", async (req,res) => {
+  try {
+
+    const poll = await Poll.findOne({
+      where: {
+        slug: req.params.slug,
+      }
+    });
+
+    if (!poll) {return res.status(404).json({ error: "Poll not found"})};
+
+    res.json(poll);
+  } catch (error) {
+
+    console.error("Error fetching poll by slug:", error);
+    
+    res.status(500).json({ error: "Failed to fetch poll by slug"})
+  }
+
+});
+
 module.exports = router;
