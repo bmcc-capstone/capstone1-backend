@@ -86,6 +86,25 @@ router.get("/livepolls", async (req, res) => {
   }
 });
 
+// Get all expired public polls
+router.get("/expiredpolls", async (req, res) => {
+  try {
+    const polls = await Poll.findAll({
+      where: {
+        expires_date: {
+          [Op.lte]: new Date(), // Polls with expiration date in the past
+        },
+        public: true,
+      },
+    });
+
+    res.json(polls);
+  } catch (error) {
+    console.error("Error fetching expired polls:", error);
+    res.status(500).json({ error: "Failed to fetch expired polls" });
+  }
+});
+
 //Delete Polls
 router.delete("/:id", async (req, res) => {
   try {
