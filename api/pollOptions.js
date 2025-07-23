@@ -64,4 +64,29 @@ router.get("/:poll_id", async (req, res) => {
   }
 });
 
+// PATCH /api/poll-options/:id
+router.patch("/:id", async (req, res) => {
+  try {
+    const optionId = req.params.id;
+    const { option_text } = req.body;
+
+    if (!option_text) {
+      return res.status(400).json({ error: "option_text is required" });
+    }
+
+    const option = await PollOption.findByPk(optionId);
+    if (!option) {
+      return res.status(404).json({ error: "Poll option not found" });
+    }
+
+    option.option_text = option_text;
+    await option.save();
+
+    res.json(option);
+  } catch (error) {
+    console.error("Error updating poll option:", error);
+    res.status(500).json({ error: "Failed to update poll option" });
+  }
+});
+
 module.exports = router;

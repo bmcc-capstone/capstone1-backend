@@ -36,10 +36,10 @@ const Poll = db.define("polls", {
     defaultValue: true,
   },
 
-
   status: {
     type: DataTypes.STRING,
     allowNull: true,
+    defaultValue: null,
   },
 
   user_id: {
