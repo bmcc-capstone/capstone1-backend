@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //Get ALL ballots by specific poll ID
-router.get("/ballots/poll/:poll_id", async (req, res) => {
+router.get("/poll/:poll_id", async (req, res) => {
   try {
     const ballots = await Ballot.findAll({
       where: {
