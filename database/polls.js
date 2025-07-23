@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 const bcrypt = require("bcrypt");
 const slugify = require('slugify');
+require("dotenv").config();
 
 const Poll = db.define("polls", {
   poll_id: {
@@ -67,9 +68,10 @@ Poll.beforeCreate(async (poll) => {
       lower: true, 
       strict: true,
     });
-
+  
+  const baseUrl = process.env.FRONTEND_URL || "http://localhost:3000";
   poll.slug = `${rawSlug}-${Date.now()}`;
-  poll.shareableLink = `http://localhost:3000/poll/${poll.slug}`;
+  poll.shareableLink = `${baseUrl}/poll/${poll.slug}`;
   }
 })
 
