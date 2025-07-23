@@ -36,7 +36,7 @@ router.get("/poll/:id", async (req, res) => {
   }
 });
 
-//POST
+//Post
 router.post("/:userId", async (req, res) => {
   try {
     const poll = await Poll.create({
@@ -45,7 +45,9 @@ router.post("/:userId", async (req, res) => {
       expires_date: req.body.expires_date,
       status: req.body.status,
       user_id: req.params.userId,
-      public: req.body.public || false,
+
+      public: req.body.public,
+
     });
     console.log(poll);
 
@@ -101,6 +103,33 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting poll:", error);
     res.status(500).json({ error: "Failed to delete poll" });
+  }
+});
+
+// PATCH - Update specific poll by id
+router.patch("/:id", async (req, res) => {
+  try {
+    const poll = await Poll.findByPk(req.params.id);
+
+    if (!poll) {
+      return res.status(404).json({ error: "Poll not found" });
+    }
+
+    // Update only fields provided in the request body
+    const updatedFields = {
+      title: req.body.title ?? poll.title,
+      description: req.body.description ?? poll.description,
+      expires_date: req.body.expires_date ?? poll.expires_date,
+      status: req.body.status ?? poll.status,
+      public: req.body.public ?? poll.public,
+    };
+
+    await poll.update(updatedFields);
+
+    res.json(poll);
+  } catch (error) {
+    console.error("Error updating poll:", error);
+    res.status(500).json({ error: "Failed to update poll" });
   }
 });
 
