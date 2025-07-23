@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const User = db.define("user", {
   user_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     autoIncrement: true,
     primaryKey: true,
   },
