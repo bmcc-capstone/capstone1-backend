@@ -47,7 +47,6 @@ router.post("/:userId", async (req, res) => {
       user_id: req.params.userId,
 
       public: req.body.public,
-
     });
     console.log(poll);
 
@@ -151,5 +150,18 @@ router.patch("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update poll" });
   }
 });
+
+// //results
+// router.get("/results", async (req, res) => {
+//   const { grouped } = req.body.grouped;
+//   const winner = false;
+//   const rounds = [];
+
+//   while (winner === false) {
+//     const rankOneGrouped = grouped.map((group) => group[0]);
+
+//     rankOneGrouped.forEach((ballotItem) => {});
+//   }
+// });
 
 module.exports = router;
