@@ -1,31 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const { BallotItem } = require("../database");
+const { Ballot } = require("../database");
 
 // Get vote counts for each ballot item in a poll
 router.get("/votes/:poll_id", async (req, res) => {
   try {
     const pollId = req.params.poll_id;
-    const voteCounts = await BallotItem.findAll({
+    console.log(pollId);
+    const voteCounts = await Ballot.findAll({
       where: { poll_id: pollId },
       attributes: [
-        "ballotItem_id",
+        "ballot_id",
         [
-          BallotItem.sequelize.fn(
-            "COUNT",
-            BallotItem.sequelize.col("ballotItem_id")
-          ),
+          Ballot.sequelize.fn("COUNT", Ballot.sequelize.col("ballot_id")),
           "voteCount",
         ],
       ],
-      group: ["ballotItem_id"],
-      raw: true, // 
+      group: ["ballot_id"],
+      raw: true, //
     });
 
     // Convert voteCount to number
-    const formatted = voteCounts.map(item => ({
+    const formatted = voteCounts.map((item) => ({
       ...item,
-      voteCount: Number(item.voteCount)
+      voteCount: Number(item.voteCount),
     }));
 
     res.json(formatted);
