@@ -153,7 +153,6 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-
 // //results
 // router.get("/results", async (req, res) => {
 //   const { grouped } = req.body.grouped;
@@ -166,9 +165,6 @@ router.patch("/:id", async (req, res) => {
 //     rankOneGrouped.forEach((ballotItem) => {});
 //   }
 // });
-
-router.get("/", async (req, res) => {
-  res.json("Hello, World!");
 
 router.get("/isExpired/:poll_id", async (req, res) => {
   try {
@@ -191,14 +187,14 @@ router.post("/results", async (req, res) => {
   let rounds = [];
   let winner = null;
 
-  let remainingOptions = new Set(
-    grouped.flat().map((item) => item.option_id)
-  );
+  let remainingOptions = new Set(grouped.flat().map((item) => item.option_id));
 
   while (!winner && remainingOptions.size > 1) {
     // Count first-rank votes for remaining options
     const firstChoices = grouped
-      .map((ballot) => ballot.find((item) => remainingOptions.has(item.option_id)))
+      .map((ballot) =>
+        ballot.find((item) => remainingOptions.has(item.option_id))
+      )
       .filter(Boolean); // remove nulls
 
     const tally = {};
@@ -233,7 +229,6 @@ router.post("/results", async (req, res) => {
   }
 
   res.json({ winner, rounds });
-
 });
 
 module.exports = router;
