@@ -23,8 +23,8 @@ router.get("/user/:userId", async (req, res) => {
 //get specific poll by id
 router.get("/poll/:id", async (req, res) => {
   try {
-    const poll = await Poll.findByPk(req.params.id,  {
-      include: [PollOption], 
+    const poll = await Poll.findByPk(req.params.id, {
+      include: [PollOption],
     });
 
     if (!poll) {
@@ -49,7 +49,6 @@ router.post("/:userId", async (req, res) => {
       user_id: req.params.userId,
 
       public: req.body.public,
-
     });
     console.log(poll);
 
@@ -154,6 +153,23 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+
+// //results
+// router.get("/results", async (req, res) => {
+//   const { grouped } = req.body.grouped;
+//   const winner = false;
+//   const rounds = [];
+
+//   while (winner === false) {
+//     const rankOneGrouped = grouped.map((group) => group[0]);
+
+//     rankOneGrouped.forEach((ballotItem) => {});
+//   }
+// });
+
+router.get("/", async (req, res) => {
+  res.json("Hello, World!");
+
 router.get("/isExpired/:poll_id", async (req, res) => {
   try {
     const poll = await Poll.findByPk(req.params.poll_id);
@@ -217,6 +233,7 @@ router.post("/results", async (req, res) => {
   }
 
   res.json({ winner, rounds });
+
 });
 
 module.exports = router;
