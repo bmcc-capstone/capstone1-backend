@@ -23,8 +23,8 @@ router.get("/user/:userId", async (req, res) => {
 //get specific poll by id
 router.get("/poll/:id", async (req, res) => {
   try {
-    const poll = await Poll.findByPk(req.params.id,  {
-      include: [PollOption], 
+    const poll = await Poll.findByPk(req.params.id, {
+      include: [PollOption],
     });
 
     if (!poll) {
@@ -165,5 +165,9 @@ router.patch("/:id", async (req, res) => {
 //     rankOneGrouped.forEach((ballotItem) => {});
 //   }
 // });
+
+router.get("/", async (req, res) => {
+  res.json("Hello, World!");
+});
 
 module.exports = router;
