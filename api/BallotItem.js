@@ -4,7 +4,8 @@ const { Ballot, BallotItem } = require("../database");
 const { Poll } = require("../database");
 
 //Get ALL ballotitems by specific poll ID
-router.get("/ballotItems/poll/:poll_id", async (req, res) => {
+router.get("/:poll_id", async (req, res) => {
+  console.log("hello");
   try {
     const ballotsItem = await BallotItem.findAll({
       where: {
