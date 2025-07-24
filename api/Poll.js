@@ -170,7 +170,7 @@ router.get("/:slug", async (req,res) => {
   } catch (error) {
 
     console.error("Error fetching poll by slug:", error);
-    
+
     res.status(500).json({ error: "Failed to fetch poll by slug"})
   }
 

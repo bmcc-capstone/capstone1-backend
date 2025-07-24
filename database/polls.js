@@ -71,7 +71,7 @@ Poll.beforeCreate(async (poll) => {
   
   const baseUrl = process.env.FRONTEND_URL || "http://localhost:3000";
   poll.slug = `${rawSlug}-${Date.now()}`;
-  poll.shareableLink = `${baseUrl}/poll/${poll.slug}`;
+  poll.shareableLink = `${baseUrl}/PollForm/${poll.slug}`;
   }
 })
 
