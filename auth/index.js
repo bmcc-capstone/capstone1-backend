@@ -190,6 +190,8 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log(username);
+    console.log(password);
 
     if (!username || !password) {
       res.status(400).send({ error: "Username and password are required" });
