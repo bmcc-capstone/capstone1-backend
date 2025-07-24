@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
-const { Poll } = require("../database");
+const { Poll, PollOption } = require("../database");
 
 //GET ROUTES
 
@@ -23,7 +23,9 @@ router.get("/user/:userId", async (req, res) => {
 //get specific poll by id
 router.get("/poll/:id", async (req, res) => {
   try {
-    const poll = await Poll.findByPk(req.params.id);
+    const poll = await Poll.findByPk(req.params.id,  {
+      include: [PollOption], 
+    });
 
     if (!poll) {
       return res.status(404).json({ error: "Poll not found" });
