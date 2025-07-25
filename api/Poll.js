@@ -74,20 +74,24 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 //get specific poll by id
-router.get("/poll/:id", async (req, res) => {
+router.get("/poll/:poll_id", async (req, res) => {
   try {
-    const poll = await Poll.findByPk(req.params.id, {
-      include: [PollOption],
+    if (!req.params.poll_id || isNaN(req.params.poll_id)) {
+      return res.status(400).json({ error: "Valid poll ID required" });
+    }
+
+    const poll = await Poll.findByPk(req.params.poll_id, {
+      include: [{ model: PollOption }], // Ensure options are included
     });
 
     if (!poll) {
       return res.status(404).json({ error: "Poll not found" });
     }
 
-    res.send(poll);
-  } catch (error) {
-    console.error("Error fetching specific poll:", error);
-    res.status(500).json({ error: "Failed to fetch poll" });
+    res.json(poll);
+  } catch (err) {
+    console.error("Poll fetch error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -231,6 +235,26 @@ router.get("/isExpired/:poll_id", async (req, res) => {
   } catch (error) {
     console.error("Error checking expiration:", error);
     res.status(500).json({ error: "Failed to check poll expiration" });
+  }
+});
+
+router.get("/:slug", async (req, res) => {
+  try {
+    const poll = await Poll.findOne({
+      where: {
+        slug: req.params.slug,
+      },
+    });
+
+    if (!poll) {
+      return res.status(404).json({ error: "Poll not found" });
+    }
+
+    res.json(poll);
+  } catch (error) {
+    console.error("Error fetching poll by slug:", error);
+
+    res.status(500).json({ error: "Failed to fetch poll by slug" });
   }
 });
 
