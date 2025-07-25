@@ -3,6 +3,59 @@ const router = express.Router();
 const { Op } = require("sequelize");
 const { Poll, PollOption } = require("../database");
 
+// POST /api/results
+router.post("/results", async (req, res) => {
+  console.log("req.body:", req.body);
+  const { grouped } = req.body; // grouped ballots from frontend
+  let rounds = [];
+  let winner = null;
+
+  let remainingOptions = new Set(grouped.flat().map((item) => item.option_id));
+  let eliminatedPerRound = [];
+
+  while (!winner && remainingOptions.size > 1) {
+    // Count first-rank votes for remaining options
+    const firstChoices = grouped
+      .map((ballot) =>
+        ballot.find((item) => remainingOptions.has(item.option_id))
+      )
+      .filter(Boolean); // remove nulls
+
+    const tally = {};
+    for (const vote of firstChoices) {
+      tally[vote.option_id] = (tally[vote.option_id] || 0) + 1;
+    }
+
+    // Save round
+    rounds.push({ ...tally });
+
+    const totalVotes = firstChoices.length;
+    const sortedOptions = Object.entries(tally).sort((a, b) => a[1] - b[1]);
+    const [topOption, topVotes] = sortedOptions[sortedOptions.length - 1];
+
+    // Check for winner
+    if (topVotes > totalVotes / 2) {
+      winner = topOption;
+      eliminatedPerRound.push([]);
+      break;
+    }
+
+    // Eliminate option with fewest votes
+    const [lowestOption] = sortedOptions[0];
+    eliminatedPerRound.push([parseInt(lowestOption)]);
+    remainingOptions.delete(parseInt(lowestOption));
+    // Remove eliminated options from grouped
+    grouped.forEach((ballot) => {
+      const index = ballot.findIndex(
+        (item) => item.option_id === parseInt(lowestOption)
+      );
+      if (index !== -1) ballot.splice(index, 1);
+    });
+  }
+
+  res.json({ winner, rounds, eliminatedPerRound });
+});
+
 //GET ROUTES
 
 // Get all Polls with user_id
@@ -179,56 +232,6 @@ router.get("/isExpired/:poll_id", async (req, res) => {
     console.error("Error checking expiration:", error);
     res.status(500).json({ error: "Failed to check poll expiration" });
   }
-});
-
-// POST /api/results
-router.post("/results", async (req, res) => {
-  const { grouped } = req.body; // grouped ballots from frontend
-  let rounds = [];
-  let winner = null;
-
-  let remainingOptions = new Set(grouped.flat().map((item) => item.option_id));
-
-  while (!winner && remainingOptions.size > 1) {
-    // Count first-rank votes for remaining options
-    const firstChoices = grouped
-      .map((ballot) =>
-        ballot.find((item) => remainingOptions.has(item.option_id))
-      )
-      .filter(Boolean); // remove nulls
-
-    const tally = {};
-    for (const vote of firstChoices) {
-      tally[vote.option_id] = (tally[vote.option_id] || 0) + 1;
-    }
-
-    // Save round
-    rounds.push({ ...tally });
-
-    const totalVotes = firstChoices.length;
-    const sortedOptions = Object.entries(tally).sort((a, b) => a[1] - b[1]);
-    const [topOption, topVotes] = sortedOptions[sortedOptions.length - 1];
-
-    // Check for winner
-    if (topVotes > totalVotes / 2) {
-      winner = topOption;
-      break;
-    }
-
-    // Eliminate option with fewest votes
-    const [lowestOption] = sortedOptions[0];
-    remainingOptions.delete(parseInt(lowestOption));
-
-    // Remove eliminated options from grouped
-    grouped.forEach((ballot) => {
-      const index = ballot.findIndex(
-        (item) => item.option_id === parseInt(lowestOption)
-      );
-      if (index !== -1) ballot.splice(index, 1);
-    });
-  }
-
-  res.json({ winner, rounds });
 });
 
 module.exports = router;

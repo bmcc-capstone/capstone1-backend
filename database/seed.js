@@ -158,6 +158,7 @@ const seed = async () => {
         description: "Which do you prefer for a quick meal?",
         user_id: users[0].user_id,
         status: "published",
+        expires_date: new Date(2024, 6, 1, 12, 0).toISOString(),
       },
       {
         title: "Favorite Comfort Food",
