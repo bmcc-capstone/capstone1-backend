@@ -83,7 +83,7 @@ router.post("/auth0", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
@@ -229,7 +229,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
@@ -252,16 +252,19 @@ router.post("/logout", (req, res) => {
 // Get current user route (protected)
 router.get("/me", (req, res) => {
   const token = req.cookies.token;
+  console.log("Token received:", token); // 🚨 Debug log
 
   if (!token) {
-    return res.send({});
+    console.log("No token found in cookies"); // 🚨 Debug log
+    return res.send({ user: null });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, decodedUser) => {
     if (err) {
+      console.log("JWT Verify Error:", err.message); // 🚨 Debug log
       return res.status(403).send({ error: "Invalid or expired token" });
     }
-    res.send({ user: user });
+    res.send({ user: decodedUser });
   });
 });
 
