@@ -101,4 +101,18 @@ router.patch("/update-rankings", async (req, res) => {
   }
 });
 
+router.get("/:slug", async (req, res) => {
+  try {
+    const ballotsItem = await BallotItem.findAll({
+      where: {
+        slug: req.params.slug,
+      },
+    });
+    res.json(ballotsItem);
+  } catch (error) {
+    console.error("Error fetching ballots for poll:", error);
+    res.status(500).json({ error: "Failed to fetch poll ballots" });
+  }
+});
+
 module.exports = router;

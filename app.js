@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: FRONTEND_URL.replace(/\/$/, ""), // removes trailing slash if any,
     credentials: true,
-    optionSuccessStatus: 200,
+    optionsSuccessStatus: 200,
   })
 );
 
