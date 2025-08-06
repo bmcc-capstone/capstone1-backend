@@ -18,8 +18,9 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: FRONTEND_URL,
+    origin: FRONTEND_URL.replace(/\/$/, ""), // removes trailing slash if any,
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 
@@ -30,7 +31,6 @@ app.use(morgan("dev")); // logging middleware
 app.use(express.static(path.join(__dirname, "public"))); // serve static files from public folder
 app.use("/api", apiRouter); // mount api router
 app.use("/auth", authRouter); // mount auth router
-
 // error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

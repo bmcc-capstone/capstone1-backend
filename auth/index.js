@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { User } = require("../database");
+const Sequelize = require("sequelize");
 
 const router = express.Router();
 
@@ -82,7 +83,7 @@ router.post("/auth0", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
@@ -104,12 +105,19 @@ router.post("/auth0", async (req, res) => {
 // Signup route
 router.post("/signup", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, firstName, lastName, email, password, confirmPassword } =
+      req.body;
 
-    if (!username || !password) {
-      return res
-        .status(400)
-        .send({ error: "Username and password are required" });
+    // field validation
+    if (
+      !username ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
+      return res.status(400).send({ error: "All fields are required" });
     }
 
     if (password.length < 6) {
@@ -118,22 +126,37 @@ router.post("/signup", async (req, res) => {
         .send({ error: "Password must be at least 6 characters long" });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      return res.status(409).send({ error: "Username already exists" });
+    if (password !== confirmPassword) {
+      return res.status(400).send({ error: "Passwords do not match" });
     }
 
-    // Create new user
-    const passwordHash = User.hashPassword(password);
-    const user = await User.create({ username, passwordHash });
+    // Check if username or email already exists
+    const existingByUsername = await User.findOne({ where: { username } });
+    const existingByEmail = await User.findOne({ where: { email } });
 
-    // Generate JWT token
+    if (existingByUsername || existingByEmail) {
+      return res.status(409).send({
+        error: existingByUsername
+          ? "Username already exists"
+          : "Email already exists",
+      });
+    }
+
+    // Hash the password
+    const passwordHash = User.hashPassword(password);
+    const user = await User.create({
+      username,
+      firstName,
+      lastName,
+      email,
+      passwordHash: passwordHash,
+    });
+
+    // Generate JWT
     const token = jwt.sign(
       {
         id: user.id,
         username: user.username,
-        auth0Id: user.auth0Id,
         email: user.email,
       },
       JWT_SECRET,
@@ -144,12 +167,18 @@ router.post("/signup", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.send({
       message: "User created successfully",
-      user: { id: user.id, username: user.username },
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
     });
   } catch (error) {
     console.error("Signup error:", error);
@@ -161,6 +190,8 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log(username);
+    console.log(password);
 
     if (!username || !password) {
       res.status(400).send({ error: "Username and password are required" });
@@ -169,9 +200,13 @@ router.post("/login", async (req, res) => {
 
     // Find user
     const user = await User.findOne({ where: { username } });
-    user.checkPassword(password);
-    if (!user) {
-      return res.status(401).send({ error: "Invalid credentials" });
+    // user.checkPassword(password);
+    // if (!user) {
+    //   return res.status(401).send({ error: "Invalid credentials" });
+    // }
+
+    if (!user || !user.checkPassword(password)) {
+      return res.status(401).send({ error: "Invalid Credentials" });
     }
 
     // Check password
@@ -194,7 +229,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
@@ -217,16 +252,19 @@ router.post("/logout", (req, res) => {
 // Get current user route (protected)
 router.get("/me", (req, res) => {
   const token = req.cookies.token;
+  console.log("Token received:", token); // 🚨 Debug log
 
   if (!token) {
-    return res.send({});
+    console.log("No token found in cookies"); // 🚨 Debug log
+    return res.send({ user: null });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, decodedUser) => {
     if (err) {
+      console.log("JWT Verify Error:", err.message); // 🚨 Debug log
       return res.status(403).send({ error: "Invalid or expired token" });
     }
-    res.send({ user: user });
+    res.send({ user: decodedUser });
   });
 });
 

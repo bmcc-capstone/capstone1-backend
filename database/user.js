@@ -3,14 +3,22 @@ const db = require("./db");
 const bcrypt = require("bcrypt");
 
 const User = db.define("user", {
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+
   username: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
     validate: {
-      len: [3, 20],
+      notEmpty: true,
     },
   },
+
   email: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -19,6 +27,27 @@ const User = db.define("user", {
       isEmail: true,
     },
   },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  profilePicture: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue:
+      "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg",
+  },
+
   auth0Id: {
     type: DataTypes.STRING,
     allowNull: true,

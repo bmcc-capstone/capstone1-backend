@@ -1,0 +1,53 @@
+const { DataTypes } = require("sequelize");
+const db = require("./db");
+const bcrypt = require("bcrypt");
+
+const Poll = db.define("polls", {
+  poll_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+
+  title: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+
+  expires_date: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  public: {
+    type: DataTypes.BOOLEAN,
+    allowNull: null,
+    defaultValue: true,
+  },
+
+  status: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: "users",
+      key: "user_id",
+    },
+  },
+});
+
+module.exports = Poll;
